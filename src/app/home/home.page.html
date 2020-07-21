@@ -1,20 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header translucent>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-searchbar class="customSearch" placeholder="Filter Photos" debounce="500" (ionChange)="filterPhotos($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content fullscreen>
+  <ng-container *ngIf="filteredPhotos?.length > 0; else noPhotos">
+    <ion-virtual-scroll [items]="filteredPhotos">
+      <ion-item *virtualItem="let photo">
+        <app-photo [photo]="photo"></app-photo>
+      </ion-item>
+    </ion-virtual-scroll>
+  </ng-container>
+  <ng-template #noPhotos>
+    <app-no-photos></app-no-photos>
+  </ng-template>
 </ion-content>
